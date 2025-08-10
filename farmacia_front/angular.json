@@ -3,19 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "farmacia-frontend": {
+    "Farmacia_Front": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -66,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "farmacia-frontend:build:production"
+              "buildTarget": "Farmacia_Front:build:production"
             },
             "development": {
-              "buildTarget": "farmacia-frontend:build:development"
+              "buildTarget": "Farmacia_Front:build:development"
             }
           },
           "defaultConfiguration": "development"
