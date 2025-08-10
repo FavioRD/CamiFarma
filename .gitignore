@@ -20,6 +20,7 @@ dist/
 .vscode/
 .idea/
 *.iml
+.metadata
 
 # === BACKEND (Spring Boot en farmacia/) ===
 farmacia/target/
@@ -30,6 +31,7 @@ farmacia/.project
 farmacia/.settings/
 farmacia/hs_err_pid*
 farmacia/replay_pid*
+farmacia/.metadata
 
 # === FRONTEND (Angular en farmacia-frontend/) ===
 farmacia-frontend/node_modules/
