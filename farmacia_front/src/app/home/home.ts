@@ -24,8 +24,8 @@ import { ProductoService, Producto } from '../producto.service';
           <td>{{ p.id }}</td>
           <td>{{ p.nombre }}</td>
           <td>{{ p.marca }}</td>
-          <td>{{ p.presentacion }}</td>
-          <td>{{ p.precioVenta | currency }}</td>
+          <td>{{ p.presentacion }}</td>  
+          <td>S/.{{ p.precioVenta}}</td>
           <td>{{ p.stock }}</td>
         </tr>
       </tbody>

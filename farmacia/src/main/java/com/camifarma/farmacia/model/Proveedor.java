@@ -1,23 +1,22 @@
 package com.camifarma.farmacia.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "proveedores")
 public class Proveedor {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String nombre;
-    private String telefono;
-    private String direccion;
-    private String email;
+	@Column(nullable = false)
+	private String nombre;
 
-    @OneToMany(mappedBy = "proveedor")
-    private List<Medicamento> medicamentos;
+	@Column(nullable = false)
+	private String numero;
+
+	@Column(nullable = false)
+	private String email;
 
 	public Long getId() {
 		return id;
@@ -35,20 +34,12 @@ public class Proveedor {
 		this.nombre = nombre;
 	}
 
-	public String getTelefono() {
-		return telefono;
+	public String getNumero() {
+		return numero;
 	}
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	public String getEmail() {
@@ -58,14 +49,5 @@ public class Proveedor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public List<Medicamento> getMedicamentos() {
-		return medicamentos;
-	}
-
-	public void setMedicamentos(List<Medicamento> medicamentos) {
-		this.medicamentos = medicamentos;
-	}
-
 
 }

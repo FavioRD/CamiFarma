@@ -1,26 +1,29 @@
 package com.camifarma.farmacia.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
 
-@Data
+import jakarta.persistence.*;
+
 @Entity
 @Table(name = "medicamentos")
 public class Medicamento {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String nombre;
-    private String marca;
-    private String presentacion;
-    private double precioVenta;
-    private int stock;
+	@Column(nullable = false)
+	private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "proveedor_id")
-    private Proveedor proveedor;
+	@Column(nullable = false)
+	private String marca;
+
+	@Column(nullable = false)
+	private String presentacion;
+
+	@Column(name = "precio_venta", nullable = false)
+	private Double precioVenta;
+
+	@Column(name = "stock")
+	private Integer stock;
 
 	public Long getId() {
 		return id;
@@ -54,20 +57,20 @@ public class Medicamento {
 		this.presentacion = presentacion;
 	}
 
-	public double getPrecioVenta() {
+	public Double getPrecioVenta() {
 		return precioVenta;
 	}
 
-	public void setPrecioVenta(double precioVenta) {
+	public void setPrecioVenta(Double precioVenta) {
 		this.precioVenta = precioVenta;
 	}
 
-	public int getStock() {
+	public Integer getStock() {
 		return stock;
 	}
 
-	public void setStock(int stock) {
+	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
-    
+	
 }
