@@ -11,7 +11,6 @@ import { ProductoService, Producto } from '../producto.service';
     
       <h2 class="text-2xl font-bold text-center mb-6">Inventario de Medicamentos</h2>
       <div class="flex justify-evenly">
-        <!-- Formulario -->
         <form (ngSubmit)="guardarProducto()" class="w-full max-w-lg  bg-white p-6 rounded-lg shadow-md space-y-4">
           <h2 class="text-xl font-bold mb-4">Agregar Producto</h2>
           <input [(ngModel)]="producto.nombre" name="nombre" placeholder="Nombre" required
@@ -37,7 +36,6 @@ import { ProductoService, Producto } from '../producto.service';
           </div>
         </form>
   
-        <!-- Tabla -->
         <div class="overflow-x-auto bg-white rounded-lg shadow-md ">
           <table class="min-w-full text-left border-collapse">
             <thead class="bg-blue-500 text-white">
