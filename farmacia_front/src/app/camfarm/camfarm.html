@@ -1,1 +1,73 @@
-<p>camfarm works!</p>
+<div class="flex bg-gray-100">
+  <!-- Sidebar lateral -->
+  <app-navbar class="w-64 bg-orange-600 text-white"></app-navbar>
+
+  <div class="flex-1 bg-gradient-to-b from-orange-50 to-yellow-50 overflow-y-auto">
+    
+    <section class="text-center py-12 px-6">
+      <h1 class="text-4xl md:text-5xl font-bold text-orange-600 mb-4">
+        CamiFarma+
+      </h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Administra y controla de manera eficiente tus medicamentos, productos y stock en tiempo real.
+      </p>
+      <button 
+        routerLink="/productos"
+        class="mt-6 px-6 py-3 bg-orange-500 text-white rounded-xl shadow-lg hover:bg-orange-600 transition">
+        Ver Inventario
+      </button>
+    </section>
+
+    <section class="px-6 py-12">
+      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-10">
+        Resumen del Inventario
+      </h2>
+      <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-orange-500">
+          <h3 class="text-lg font-semibold text-gray-800">Medicamentos</h3>
+          <p class="text-3xl font-bold text-orange-600 mt-2">124</p>
+          <p class="text-sm text-gray-500">Total en stock</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-yellow-500">
+          <h3 class="text-lg font-semibold text-gray-800">Categorías</h3>
+          <p class="text-3xl font-bold text-yellow-600 mt-2">12</p>
+          <p class="text-sm text-gray-500">Tipos de productos</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-red-500">
+          <h3 class="text-lg font-semibold text-gray-800">Stock Crítico</h3>
+          <p class="text-3xl font-bold text-red-600 mt-2">8</p>
+          <p class="text-sm text-gray-500">Productos por agotarse</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 py-12 bg-white">
+      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-10">
+        Últimos productos añadidos
+      </h2>
+      <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto">
+        <div class="bg-orange-50 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+          <div class="p-4">
+            <h3 class="font-bold text-orange-700">Ibuprofeno 400mg</h3>
+            <p class="text-gray-500 text-sm">Antiinflamatorio</p>
+            <p class="text-orange-600 font-semibold mt-2">Stock: 25</p>
+          </div>
+        </div>
+        <div class="bg-orange-50 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+          <div class="p-4">
+            <h3 class="font-bold text-orange-700">Jarabe para la tos</h3>
+            <p class="text-gray-500 text-sm">Adultos y niños</p>
+            <p class="text-orange-600 font-semibold mt-2">Stock: 14</p>
+          </div>
+        </div>
+        <div class="bg-orange-50 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+          <div class="p-4">
+            <h3 class="font-bold text-orange-700">Vitamina C</h3>
+            <p class="text-gray-500 text-sm">Tabletas 1000mg</p>
+            <p class="text-orange-600 font-semibold mt-2">Stock: 40</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
