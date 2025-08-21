@@ -11,7 +11,7 @@
       <form
         #f="ngForm"
         (ngSubmit)="guardarProducto(f)"
-        class="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg space-y-4 border border-orange-100"
+        class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md flex flex-col gap-4 max-h-[50vh] overflow-y-auto"
       >
         <h2 class="text-xl font-bold mb-4 text-gray-700">
           {{ editando ? "✏️ Editar Producto" : "➕ Agregar Producto" }}
@@ -82,10 +82,10 @@
       </form>
 
       <div
-        class="w-full overflow-x-auto bg-white rounded-2xl shadow-lg border border-orange-100"
+        class="max-h-[80vh] max-w-[100vh] overflow-x-auto bg-white  border border-orange-100 overflow-y-auto rounded-lg shadow"
       >
         <table class="min-w-full text-left border-collapse">
-          <thead class="bg-orange-500 text-white">
+          <thead class="bg-orange-500 text-white sticky top-0">
             <tr>
               <th class="py-3 px-4">ID</th>
               <th class="py-3 px-4">Nombre</th>
