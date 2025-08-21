@@ -28,5 +28,12 @@ public class MedicamentoService {
 	public void deleteMedicamento(Long id) {
 		medicamentoRepository.deleteById(id);
 	}
+	public Medicamento updateMedicamento(Long id, Medicamento medicamento) {
+		if (medicamentoRepository.existsById(id)) {
+			medicamento.setId(id);
+			return medicamentoRepository.save(medicamento);
+		}
+		return null;
+	}
 
 }

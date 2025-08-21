@@ -28,4 +28,11 @@ public class ProveedorService {
 	public void deleteProveedor(Long id) {
 		proveedorRepository.deleteById(id);
 	}
+	public Proveedor updateProveedor(Long id, Proveedor proveedor) {
+		if (proveedorRepository.existsById(id)) {
+			proveedor.setId(id);
+			return proveedorRepository.save(proveedor);
+		}
+		return null;
+	}
 }
