@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService, Producto } from '../producto.service';
-import { Camfarm } from "../camfarm/camfarm";
 import { Navbar } from "../navbar/navbar";
 
 @Component({
@@ -40,8 +39,11 @@ export class HomeComponent implements OnInit {
     this.productoService.getProductos().subscribe(data => this.productos = data);
   }
 
-  guardarProducto() {
-    if (this.editando) {
+  guardarProducto(form: any) {
+    if(form.invalid){
+      return alert('Por favor completa todos los campos requeridos.');
+    }    
+    else if (this.editando) {
       this.productoService.actualizarProducto(this.productoIdEditar!, this.producto)
         .subscribe(() => {
           this.cargarProductos();
@@ -77,7 +79,7 @@ export class HomeComponent implements OnInit {
 
   nuevoProducto(): Producto {
     return {
-      nombre: '',
+      nombre:'',
       marca: '',
       presentacion: '',
       precioVenta: 0,

@@ -27,8 +27,11 @@ export class ProveedorComponent implements OnInit {
       .subscribe(data => this.proveedores = data);
   }
 
-  guardarProveedor() {
-    if (this.editando) {
+  guardarProveedor(form:any) {
+    if(form.invalid){
+      return alert('Por favor completa todos los campos requeridos.');
+    }
+    else if(this.editando) {
       this.proveedorService.actualizarProveedor(this.proveedorIdEditar!, this.proveedor)
         .subscribe(() => {
           this.cargarProveedores();
