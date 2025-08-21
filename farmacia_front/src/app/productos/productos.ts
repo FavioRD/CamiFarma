@@ -17,6 +17,18 @@ export class HomeComponent implements OnInit {
   producto: Producto = this.nuevoProducto();
   editando = false;
   productoIdEditar?: number;
+  presentaciones: string[] = [
+  'Tabletas / Comprimidos',
+  'Cápsulas',
+  'Jarabe',
+  'Gotas',
+  'Inyectable',
+  'Crema / Pomada',
+  'Suspensión',
+  'Supositorio',
+  'Inhalador'
+];
+
 
   constructor(private productoService: ProductoService) {}
 
