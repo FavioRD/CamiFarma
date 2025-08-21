@@ -4,8 +4,7 @@ import { Navbar } from "../navbar/navbar";
 @Component({
   selector: 'app-camfarm',
   imports: [Navbar],
-  templateUrl: './camfarm.html',
-  styleUrl: './camfarm.css'
+  templateUrl: './camfarm.html'
 })
 export class Camfarm {
 
