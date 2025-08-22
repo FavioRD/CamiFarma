@@ -3,31 +3,38 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Proveedor {
-    id?: number;
-    nombre: string;
-    email: string;
-    numero: string;
+  id?: number;
+  nombre: string;
+  email: string;
+  numero: string;
 }
 @Injectable({
-    providedIn: "root",
+  providedIn: 'root',
 })
-
 export class ProveedorService {
-    private apiUrl='http://localhost:8080/api/proveedores';
+  private apiUrl = 'http://localhost:8080/api/proveedores';
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    getProveedores(): Observable<Proveedor[]> {
-        return this.http.get<Proveedor[]>(this.apiUrl);
-    }
-    crearProveedor(proveedor:Proveedor):Observable<Proveedor>{
-        return this.http.post<Proveedor>(this.apiUrl, proveedor)
-    }
-    actualizarProveedor(id: number, proveedor: Proveedor): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, proveedor);
-    }
+  getProveedores(): Observable<Proveedor[]> {
+    return this.http.get<Proveedor[]>(this.apiUrl, {
+      withCredentials: true,
+    });
+  }
+  crearProveedor(proveedor: Proveedor): Observable<Proveedor> {
+    return this.http.post<Proveedor>(this.apiUrl, proveedor, {
+      withCredentials: true,
+    });
+  }
+  actualizarProveedor(id: number, proveedor: Proveedor): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}`, proveedor, {
+      withCredentials: true,
+    });
+  }
 
-    eliminarProveedor(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-    }
+  eliminarProveedor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
+      withCredentials: true,
+    });
+  }
 }

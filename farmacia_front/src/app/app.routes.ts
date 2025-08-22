@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProveedorComponent } from './proveedor/proveedor';
-import { HomeComponent } from './productos/productos';
-import { LoginComponent } from './login/login.component';
+import { ProveedorComponent } from './Componentes/proveedor/proveedor';
+import { HomeComponent } from './Componentes/productos/productos';
+import { LoginComponent } from './Componentes/login/login.component';
 import { Camfarm } from './camfarm/camfarm';
 
 export const routes: Routes = [
