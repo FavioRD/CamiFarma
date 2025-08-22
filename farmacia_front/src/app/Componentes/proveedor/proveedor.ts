@@ -1,48 +1,48 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ProveedorService, Proveedor } from '../proveedor.service';
+import { ProveedorService, Proveedor } from '../../proveedor.service';
 import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-proveedor',
   standalone: true,
-  imports: [CommonModule, Navbar,FormsModule],
+  imports: [CommonModule, Navbar, FormsModule],
   templateUrl: './proveedor.html',
 })
 export class ProveedorComponent implements OnInit {
   proveedores: Proveedor[] = [];
-  proveedor:Proveedor = this.nuevoProveedor();
-  editando=false;
-  proveedorIdEditar?:number;
+  proveedor: Proveedor = this.nuevoProveedor();
+  editando = false;
+  proveedorIdEditar?: number;
 
   constructor(private proveedorService: ProveedorService) {}
 
-  ngOnInit(){
-      this.cargarProveedores();
+  ngOnInit() {
+    this.cargarProveedores();
   }
 
-  cargarProveedores(){
-    this.proveedorService.getProveedores()
-      .subscribe(data => this.proveedores = data);
+  cargarProveedores() {
+    this.proveedorService
+      .getProveedores()
+      .subscribe((data) => (this.proveedores = data));
   }
 
-  guardarProveedor(form:any) {
-    if(form.invalid){
+  guardarProveedor(form: any) {
+    if (form.invalid) {
       return alert('Por favor completa todos los campos requeridos.');
-    }
-    else if(this.editando) {
-      this.proveedorService.actualizarProveedor(this.proveedorIdEditar!, this.proveedor)
+    } else if (this.editando) {
+      this.proveedorService
+        .actualizarProveedor(this.proveedorIdEditar!, this.proveedor)
         .subscribe(() => {
           this.cargarProveedores();
           this.cancelarEdicion();
         });
     } else {
-      this.proveedorService.crearProveedor(this.proveedor)
-        .subscribe(() => {
-          this.cargarProveedores();
-          this.proveedor = this.nuevoProveedor();
-        });
+      this.proveedorService.crearProveedor(this.proveedor).subscribe(() => {
+        this.cargarProveedores();
+        this.proveedor = this.nuevoProveedor();
+      });
     }
   }
 
@@ -60,7 +60,8 @@ export class ProveedorComponent implements OnInit {
 
   eliminarProveedor(id: number) {
     if (confirm('¿Seguro que quieres eliminar este proveedor?')) {
-      this.proveedorService.eliminarProveedor(id)
+      this.proveedorService
+        .eliminarProveedor(id)
         .subscribe(() => this.cargarProveedores());
     }
   }
@@ -69,7 +70,7 @@ export class ProveedorComponent implements OnInit {
     return {
       nombre: '',
       email: '',
-      numero: ''
+      numero: '',
     };
   }
 }

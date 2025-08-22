@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthDTO } from './DTOs/AuthDTO';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,10 +13,9 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(username: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password)
+  login(authDTO: AuthDTO) {
+    return this.http.post(`${this.apiUrl}/login`, authDTO, {
+      responseType: 'text',
     });
-    return this.http.post(`${this.apiUrl}/login`, {}, { headers, responseType: 'text' });
   }
 }

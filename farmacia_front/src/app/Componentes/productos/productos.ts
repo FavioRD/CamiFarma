@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ProductoService, Producto } from '../producto.service';
-import { Navbar } from "../navbar/navbar";
+import { ProductoService, Producto } from '../../producto.service';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, FormsModule, Navbar],
   templateUrl: './productos.html',
-  
 })
 export class HomeComponent implements OnInit {
   productos: Producto[] = [];
@@ -17,17 +16,16 @@ export class HomeComponent implements OnInit {
   editando = false;
   productoIdEditar?: number;
   presentaciones: string[] = [
-  'Tabletas / Comprimidos',
-  'Cápsulas',
-  'Jarabe',
-  'Gotas',
-  'Inyectable',
-  'Crema / Pomada',
-  'Suspensión',
-  'Supositorio',
-  'Inhalador'
-];
-
+    'Tabletas / Comprimidos',
+    'Cápsulas',
+    'Jarabe',
+    'Gotas',
+    'Inyectable',
+    'Crema / Pomada',
+    'Suspensión',
+    'Supositorio',
+    'Inhalador',
+  ];
 
   constructor(private productoService: ProductoService) {}
 
@@ -36,25 +34,26 @@ export class HomeComponent implements OnInit {
   }
 
   cargarProductos() {
-    this.productoService.getProductos().subscribe(data => this.productos = data);
+    this.productoService
+      .getProductos()
+      .subscribe((data) => (this.productos = data));
   }
 
   guardarProducto(form: any) {
-    if(form.invalid){
+    if (form.invalid) {
       return alert('Por favor completa todos los campos requeridos.');
-    }    
-    else if (this.editando) {
-      this.productoService.actualizarProducto(this.productoIdEditar!, this.producto)
+    } else if (this.editando) {
+      this.productoService
+        .actualizarProducto(this.productoIdEditar!, this.producto)
         .subscribe(() => {
           this.cargarProductos();
           this.cancelarEdicion();
         });
     } else {
-      this.productoService.crearProducto(this.producto)
-        .subscribe(() => {
-          this.cargarProductos();
-          this.producto = this.nuevoProducto();
-        });
+      this.productoService.crearProducto(this.producto).subscribe(() => {
+        this.cargarProductos();
+        this.producto = this.nuevoProducto();
+      });
     }
   }
 
@@ -72,18 +71,19 @@ export class HomeComponent implements OnInit {
 
   eliminarProducto(id: number) {
     if (confirm('¿Seguro que quieres eliminar este producto?')) {
-      this.productoService.eliminarProducto(id)
+      this.productoService
+        .eliminarProducto(id)
         .subscribe(() => this.cargarProductos());
     }
   }
 
   nuevoProducto(): Producto {
     return {
-      nombre:'',
+      nombre: '',
       marca: '',
       presentacion: '',
       precioVenta: 0,
-      stock: 0
+      stock: 0,
     };
   }
 }

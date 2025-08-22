@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { Navbar } from "../navbar/navbar";
+import { Navbar } from '../Componentes/navbar/navbar';
 
 @Component({
   selector: 'app-camfarm',
   imports: [Navbar],
-  templateUrl: './camfarm.html'
+  templateUrl: './camfarm.html',
 })
-export class Camfarm {
-
-}
+export class Camfarm {}
