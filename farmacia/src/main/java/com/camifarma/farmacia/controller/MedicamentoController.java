@@ -40,5 +40,9 @@ public class MedicamentoController {
 	public Medicamento updateMedicamento(@PathVariable Long id, @RequestBody Medicamento medicamento) {
 		return medicamentoService.updateMedicamento(id, medicamento);
 	}
-
+	
+	@GetMapping("/resumen")
+	public long getResumen() {
+		return medicamentoService.getResumen();
+	}
 }

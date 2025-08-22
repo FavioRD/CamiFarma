@@ -47,4 +47,9 @@ export class ProductoService {
       withCredentials: true,
     });
   }
+  totalProductos(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/resumen`, {
+      withCredentials: true,
+    });
+  }
 }

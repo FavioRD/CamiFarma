@@ -35,5 +35,8 @@ public class MedicamentoService {
 		}
 		return null;
 	}
-
+	public long getResumen() {
+		long totalMedicamentos = medicamentoRepository.count();
+		return totalMedicamentos;
+	}
 }
