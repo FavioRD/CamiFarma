@@ -18,13 +18,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/**").permitAll() // login/registro públicos
-                    .requestMatchers("/api/public/**").permitAll() // opcional
-                    .anyRequest().authenticated()
-            )
-            .httpBasic(Customizer.withDefaults()); // solo autenticación básica
+        http
+                .csrf(csrf -> csrf.disable()) // Temporalmente para APIs, pero mejor usar CSRF para web
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form // ✅ Cambia a formulario de login
+                        .loginPage("/auth/login")
+                        .loginProcessingUrl("/auth/login") // URL que procesa el login
+                        .defaultSuccessUrl("/dashboard")
+                        .failureUrl("/auth/login?error=true")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .permitAll());
+
         return http.build();
     }
 
