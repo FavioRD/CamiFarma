@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 
 export interface ProveedorMedicamento {
   id?: number;
-  proveedorId: number;
-  medicamentoId: number;
+  proveedor: { id: number }; 
+  medicamento: { id: number }; 
   precioCompra: number;
 }
+
 
 @Injectable({
   providedIn: 'root'

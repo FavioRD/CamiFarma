@@ -17,7 +17,11 @@ export class ProveedorMedicamentosComponent implements OnInit {
   medicamentos: Producto[] = [];
   medicamentosProveedor: ProveedorMedicamento[] = [];
 
-  nuevo: ProveedorMedicamento = { proveedorId: 0, medicamentoId: 0, precioCompra: 0 };
+nuevo: ProveedorMedicamento = {
+  proveedor: { id: 0 },
+  medicamento: { id: 0 },
+  precioCompra: 0
+};
 
   constructor(
     private pmService: ProveedorMedicamentoService,
@@ -48,16 +52,16 @@ export class ProveedorMedicamentosComponent implements OnInit {
     });
   }
 
-  agregar() {
-    this.pmService.agregar(this.nuevo).subscribe(() => {
-      this.cargarMedicamentosProveedor(this.nuevo.proveedorId);
-      this.nuevo = { proveedorId: 0, medicamentoId: 0, precioCompra: 0 };
-    });
+agregar() {
+  if (this.nuevo.proveedor.id === 0 || this.nuevo.medicamento.id === 0) {
+    alert("Selecciona un proveedor y un medicamento válido");
+    return;
   }
 
-  eliminar(id: number) {
-    this.pmService.eliminar(id).subscribe(() => {
-      this.cargarMedicamentosProveedor(this.nuevo.proveedorId);
-    });
-  }
+  this.pmService.agregar(this.nuevo).subscribe(() => {
+    this.cargarMedicamentosProveedor(this.nuevo.proveedor.id);
+    this.nuevo = { proveedor: { id: 0 }, medicamento: { id: 0 }, precioCompra: 0 };
+  });
+}
+
 }
