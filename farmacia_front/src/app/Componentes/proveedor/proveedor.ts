@@ -73,4 +73,24 @@ export class ProveedorComponent implements OnInit {
       numero: '',
     };
   }
+
+detallesProveedor: { medicamento: string; precioCompra: number }[] = [];
+proveedorSeleccionado?: Proveedor;
+mostrarModal = false;
+
+verDetalles(p: Proveedor) {
+  this.proveedorService.obtenerDetallesProveedor(p.id!).subscribe((data) => {
+    this.detallesProveedor = data;
+    this.proveedorSeleccionado = p;
+    this.mostrarModal = true; // Abrir modal
+  });
+}
+
+cerrarModal() {
+  this.mostrarModal = false;
+  this.detallesProveedor = [];
+  this.proveedorSeleccionado = undefined;
+}
+
+
 }

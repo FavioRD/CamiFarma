@@ -37,4 +37,10 @@ export class ProveedorService {
       withCredentials: true,
     });
   }
+
+  obtenerDetallesProveedor(id: number) {
+  return this.http.get<{ medicamento: string; precioCompra: number }[]>(
+    `${this.apiUrl}/${id}/detalles`
+  );
+}
 }

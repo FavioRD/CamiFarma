@@ -96,11 +96,50 @@
                 >
                   Eliminar
                 </button>
+                <button (click)="verDetalles(p)"
+                class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-md shadow-md transition">
+                  Ver Detalles
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="mostrarModal"
+  class="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm"
+>
+  <div class="bg-white rounded-2xl shadow-xl w-96 p-6 relative">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">
+      Productos de {{ proveedorSeleccionado?.nombre }}
+    </h2>
+
+    <table class="w-full border border-gray-200">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-3 py-2 text-left">Medicamento</th>
+          <th class="px-3 py-2 text-left">Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of detallesProveedor" class="border-t">
+          <td class="px-3 py-2">{{ d.medicamento }}</td>
+          <td class="px-3 py-2">S/ {{ d.precioCompra }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="text-right mt-4">
+      <button
+        class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+        (click)="cerrarModal()"
+      >
+        Cerrar
+      </button>
     </div>
   </div>
 </div>
