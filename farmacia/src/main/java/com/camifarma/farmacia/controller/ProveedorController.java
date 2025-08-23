@@ -1,8 +1,10 @@
 package com.camifarma.farmacia.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,5 +47,10 @@ public class ProveedorController {
 	public Proveedor updateProveedor(@PathVariable Long id, @RequestBody Proveedor proveedor) {
 		return proveedorService.updateProveedor(id, proveedor);
 	}
-
+	
+	@GetMapping("/{id}/detalles")
+		public ResponseEntity<List<Map<String, Object>>> obtenerDetallesProveedor(@PathVariable Long id) {
+		List<Map<String, Object>> detalles = proveedorService.obtenerDetallesProveedor(id);
+		return ResponseEntity.ok(detalles);
+	}
 }

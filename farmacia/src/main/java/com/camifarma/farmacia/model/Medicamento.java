@@ -1,6 +1,8 @@
 package com.camifarma.farmacia.model;
 
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +26,9 @@ public class Medicamento {
 
 	@Column(name = "stock")
 	private Integer stock;
+	
+	@OneToMany(mappedBy = "medicamento")
+    private List<ProveedorMedicamento> proveedorMedicamentos;
 
 	public Long getId() {
 		return id;

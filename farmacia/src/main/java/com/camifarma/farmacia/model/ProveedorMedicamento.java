@@ -1,5 +1,8 @@
 package com.camifarma.farmacia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +18,7 @@ public class ProveedorMedicamento {
 
     @ManyToOne
     @JoinColumn(name = "id_proveedor", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties("proveedorMedicamento")
     private Proveedor proveedor;
 
     

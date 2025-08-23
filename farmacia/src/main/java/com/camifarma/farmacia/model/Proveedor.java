@@ -1,5 +1,9 @@
 package com.camifarma.farmacia.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +21,10 @@ public class Proveedor {
 
 	@Column(nullable = false)
 	private String email;
+	
+	@OneToMany(mappedBy = "proveedor" ,cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("proveedor")
+    private List<ProveedorMedicamento> proveedorMedicamentos;
 
 	public Long getId() {
 		return id;
@@ -48,6 +56,9 @@ public class Proveedor {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public List<ProveedorMedicamento> getProveedorMedicamentos() {
+		return proveedorMedicamentos;
 	}
 
 }
