@@ -41,7 +41,6 @@ export class ProductoService {
       withCredentials: true,
     });
   }
-
   eliminarProducto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, {
       withCredentials: true,
@@ -49,6 +48,11 @@ export class ProductoService {
   }
   totalProductos(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/resumen`, {
+      withCredentials: true,
+    });
+  }
+  stockCritico(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/stockbajo`, {
       withCredentials: true,
     });
   }

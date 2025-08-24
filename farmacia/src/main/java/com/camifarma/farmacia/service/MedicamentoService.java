@@ -39,4 +39,10 @@ public class MedicamentoService {
 		long totalMedicamentos = medicamentoRepository.count();
 		return totalMedicamentos;
 	}
+	
+	public Integer stockBajo() {
+		return medicamentoRepository.productosConStockBajo();
+
+	}
+	
 }
