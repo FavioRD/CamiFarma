@@ -45,4 +45,9 @@ public class MedicamentoController {
 	public long getResumen() {
 		return medicamentoService.getResumen();
 	}
+	
+	@GetMapping("/stockbajo")
+	public Integer stockBajo() {
+		return medicamentoService.stockBajo();
+	}
 }

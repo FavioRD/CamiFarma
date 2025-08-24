@@ -9,12 +9,16 @@ import { ProductoService } from '../producto.service';
 })
 export class Camfarm {
   totalProductos: number = 0;
+  stockCritico: number = 0;
 
   constructor(private productoService: ProductoService) {}
 
   ngOnInit() {
     this.productoService.totalProductos().subscribe((total) => {
       this.totalProductos = total;
+    });
+    this.productoService.stockCritico().subscribe((stockCritico) => {
+      this.stockCritico = stockCritico;
     });
   }
 }
