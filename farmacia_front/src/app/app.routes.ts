@@ -5,13 +5,18 @@ import { HomeComponent } from './Componentes/productos/productos';
 import { LoginComponent } from './Componentes/login/login.component';
 import { Camfarm } from './camfarm/camfarm';
 import { ProveedorMedicamentosComponent } from './Componentes/provmedic/provmedic';
+import { VentasFormComponent } from './Componentes/ventas/ventas';
 
 export const routes: Routes = [
   { path: 'proveedores', component: ProveedorComponent },
   { path: 'productos', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'camfarm', component: Camfarm },
-  { path: 'proveedores/medicamentos', component: ProveedorMedicamentosComponent },
+  {
+    path: 'proveedores/medicamentos',
+    component: ProveedorMedicamentosComponent,
+  },
+  { path: 'ventas', component: VentasFormComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 

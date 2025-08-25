@@ -18,21 +18,24 @@ export interface Venta {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VentasService {
-
   private apiUrl = 'http://localhost:8080/api/ventas';
 
   constructor(private http: HttpClient) {}
 
   // Registrar venta
   registrarVenta(venta: VentaDTO): Observable<number> {
-    return this.http.post<number>(`${this.apiUrl}/registrar`, venta);
+    return this.http.post<number>(`${this.apiUrl}/registrar`, venta, {
+      withCredentials: true,
+    });
   }
 
   // Listar ventas
   listarVentas(): Observable<Venta[]> {
-    return this.http.get<Venta[]>(`${this.apiUrl}/listar`);
+    return this.http.get<Venta[]>(`${this.apiUrl}/lista`, {
+      withCredentials: true,
+    });
   }
 }

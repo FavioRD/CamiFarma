@@ -1,0 +1,462 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Navbar -->
+  <app-navbar class="w-64 bg-orange-600 text-white fixed h-full"></app-navbar>
+
+  <!-- Contenido principal -->
+  <div class="ml-64 p-8">
+    <!-- Header principal -->
+    <div class="text-center mb-12">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full shadow-lg mb-4"
+      >
+        <span class="text-2xl">🛒</span>
+      </div>
+      <h1 class="text-4xl font-bold text-gray-800 mb-3">Gestión de Ventas</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Administra tus ventas, agrega productos y mantén un control completo de
+        tu inventario
+      </p>
+    </div>
+
+    <!-- Contenedor principal con grid responsivo -->
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 max-w-7xl mx-auto">
+      <!-- Formulario de productos -->
+      <div class="space-y-6">
+        <div
+          class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
+        >
+          <div class="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4">
+            <h3 class="text-xl font-bold text-white flex items-center gap-3">
+              <span class="text-2xl">➕</span>
+              Agregar Producto
+            </h3>
+            <p class="text-orange-100 text-sm mt-1">
+              {{
+                productosCargados
+                  ? "Completa los datos del producto"
+                  : "⏳ Cargando productos..."
+              }}
+            </p>
+          </div>
+
+          <form
+            #f="ngForm"
+            (ngSubmit)="agregarProducto(f)"
+            class="p-6 space-y-5"
+          >
+            <!-- Campo Producto -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Producto
+              </label>
+              <select
+                [(ngModel)]="productoSeleccionadoId"
+                name="producto"
+                (change)="onProductoIdChange()"
+                required
+                [disabled]="!productosCargados"
+                class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all duration-200 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <option value="" disabled selected>
+                  {{
+                    productosCargados
+                      ? "Selecciona un producto"
+                      : "Cargando productos..."
+                  }}
+                </option>
+                <option *ngFor="let p of productos" [value]="p.id">
+                  {{ p.nombre }} - {{ p.marca }} (S/. {{ p.precioVenta }})
+                </option>
+              </select>
+            </div>
+
+            <!-- Campos Cantidad y Precio en fila -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Cantidad
+                </label>
+                <input
+                  [(ngModel)]="cantidad"
+                  name="cantidad"
+                  type="number"
+                  min="1"
+                  placeholder="0"
+                  required
+                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all duration-200 bg-white text-center"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Precio Unitario
+                </label>
+                <input
+                  [(ngModel)]="precioUnitario"
+                  name="precioUnitario"
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                  required
+                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all duration-200 bg-white text-center"
+                />
+              </div>
+            </div>
+
+            <!-- Campo Descuento -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Descuento (%)
+              </label>
+              <input
+                [(ngModel)]="descuento"
+                name="descuento"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="0.00"
+                class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all duration-200 bg-white text-center"
+              />
+            </div>
+
+            <!-- Resumen de cálculos -->
+            <div
+              class="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200"
+            >
+              <h4
+                class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2"
+              >
+                <span
+                  class="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs"
+                  >📊</span
+                >
+                Resumen de Cálculos
+              </h4>
+              <div class="space-y-2">
+                <div
+                  class="flex justify-between items-center py-1 border-b border-orange-200"
+                >
+                  <span class="text-sm text-gray-600">Subtotal:</span>
+                  <span class="font-semibold text-gray-800"
+                    >S/. {{ calcularSubtotal() | number : "1.2-2" }}</span
+                  >
+                </div>
+                <div
+                  class="flex justify-between items-center py-1 border-b border-orange-200"
+                >
+                  <span class="text-sm text-gray-600">Descuento:</span>
+                  <span class="font-semibold text-red-600"
+                    >- S/. {{ calcularDescuento() | number : "1.2-2" }}</span
+                  >
+                </div>
+                <div class="flex justify-between items-center pt-2">
+                  <span class="font-bold text-gray-800">Total:</span>
+                  <span class="text-xl font-bold text-orange-600"
+                    >S/. {{ calcularTotal() | number : "1.2-2" }}</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex gap-3 pt-2">
+              <button
+                type="submit"
+                class="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+              >
+                🛒 Agregar a Venta
+              </button>
+              <button
+                type="button"
+                (click)="limpiarFormulario()"
+                class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+              >
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabla de productos en venta -->
+      <div class="space-y-6">
+        <div
+          class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
+        >
+          <div class="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4">
+            <h3 class="text-xl font-bold text-white flex items-center gap-3">
+              <span class="text-2xl">📋</span>
+              Productos en Venta
+            </h3>
+            <p class="text-orange-100 text-sm mt-1">
+              {{ productosEnVenta.length }} producto{{
+                productosEnVenta.length !== 1 ? "s" : ""
+              }}
+              agregado{{ productosEnVenta.length !== 1 ? "s" : "" }}
+            </p>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-orange-50">
+                <tr>
+                  <th class="text-left py-3 px-4 font-semibold text-gray-700">
+                    Producto
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-700">
+                    Cantidad
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-700">
+                    Precio
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-700">
+                    Desc.
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-700">
+                    Subtotal
+                  </th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-700">
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-orange-100">
+                <tr
+                  *ngFor="let item of productosEnVenta; let i = index"
+                  class="hover:bg-orange-50 transition-colors duration-200"
+                >
+                  <td class="py-3 px-4">
+                    <div>
+                      <div class="font-semibold text-gray-800">
+                        {{ item.nombre }}
+                      </div>
+                      <div class="text-sm text-gray-500">{{ item.marca }}</div>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 text-center">
+                    <span
+                      class="inline-flex items-center justify-center w-8 h-8 bg-orange-100 text-orange-800 rounded-full font-semibold text-sm"
+                    >
+                      {{ item.cantidad }}
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-center font-medium text-orange-600">
+                    S/. {{ item.precioUnitario | number : "1.2-2" }}
+                  </td>
+                  <td class="py-3 px-4 text-center">
+                    <span
+                      class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800"
+                    >
+                      {{ item.descuento }}%
+                    </span>
+                  </td>
+                  <td class="py-3 px-4 text-center font-bold text-green-600">
+                    S/. {{ item.subtotal | number : "1.2-2" }}
+                  </td>
+                  <td class="py-3 px-4">
+                    <div class="flex gap-2 justify-center">
+                      <button
+                        (click)="editarItem(i)"
+                        class="p-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 rounded-lg transition-colors duration-200"
+                        title="Editar"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        (click)="eliminarItem(i)"
+                        class="p-2 bg-red-100 hover:bg-red-200 text-red-800 rounded-lg transition-colors duration-200"
+                        title="Eliminar"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Mensaje cuando no hay productos -->
+          <div
+            *ngIf="productosEnVenta.length === 0"
+            class="text-center py-12 text-gray-500"
+          >
+            <div class="text-4xl mb-3">🛒</div>
+            <p class="text-lg font-semibold">No hay productos en la venta</p>
+            <p class="text-sm">Agrega productos usando el formulario</p>
+          </div>
+
+          <!-- Resumen de la venta -->
+          <div
+            class="bg-gradient-to-r from-orange-100 to-yellow-100 p-6 border-t border-orange-200"
+          >
+            <div
+              class="flex flex-col lg:flex-row justify-between items-center gap-4"
+            >
+              <div class="text-center lg:text-left">
+                <p class="text-lg font-semibold text-gray-800">
+                  Total de Productos:
+                  <span class="text-2xl text-orange-600 ml-2">{{
+                    productosEnVenta.length
+                  }}</span>
+                </p>
+                <p class="text-3xl font-bold text-orange-600">
+                  Total Venta: S/. {{ calcularTotalVenta() | number : "1.2-2" }}
+                </p>
+              </div>
+              <div class="flex gap-3">
+                <button
+                  (click)="finalizarVenta()"
+                  [disabled]="productosEnVenta.length === 0"
+                  class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-3 rounded-lg font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:transform-none disabled:shadow-none flex items-center gap-2"
+                >
+                  <span class="text-lg">🧾</span>
+                  Finalizar Venta
+                </button>
+                <button
+                  (click)="cancelarVenta()"
+                  [disabled]="productosEnVenta.length === 0"
+                  class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-6 py-3 rounded-lg font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:transform-none disabled:shadow-none flex items-center gap-2"
+                >
+                  <span class="text-lg">❌</span>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historial de Ventas -->
+    <div class="mt-12 max-w-7xl mx-auto">
+      <div
+        class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
+      >
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
+          <h3 class="text-xl font-bold text-white flex items-center gap-3">
+            <span class="text-2xl">📊</span>
+            Historial de Ventas
+            <span *ngIf="!ventasCargadas" class="text-sm text-blue-100 ml-2">
+              ⏳ Cargando ventas...
+            </span>
+          </h3>
+          <p class="text-blue-100 text-sm mt-1">
+            {{
+              ventasCargadas
+                ? ventas.length +
+                  " venta" +
+                  (ventas.length !== 1 ? "s" : "") +
+                  " registrada" +
+                  (ventas.length !== 1 ? "s" : "")
+                : "Obteniendo datos..."
+            }}
+          </p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-blue-50">
+              <tr>
+                <th class="text-left py-3 px-4 font-semibold text-gray-700">
+                  ID Venta
+                </th>
+                <th class="text-left py-3 px-4 font-semibold text-gray-700">
+                  Fecha
+                </th>
+                <th class="text-center py-3 px-4 font-semibold text-gray-700">
+                  Total
+                </th>
+                <th class="text-center py-3 px-4 font-semibold text-gray-700">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-blue-100">
+              <tr
+                *ngFor="let venta of ventas"
+                class="hover:bg-blue-50 transition-colors duration-200"
+              >
+                <td class="py-3 px-4">
+                  <span
+                    class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-800 rounded-full font-bold text-lg"
+                  >
+                    #{{ venta.id }}
+                  </span>
+                </td>
+                <td class="py-3 px-4">
+                  <div class="text-lg font-semibold text-gray-800">
+                    {{ venta.fecha | date : "dd/MM/yyyy" }}
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    {{ venta.fecha | date : "HH:mm" }}
+                  </div>
+                </td>
+                <td class="py-3 px-4 text-center">
+                  <span class="text-2xl font-bold text-blue-600">
+                    S/. {{ venta.total | number : "1.2-2" }}
+                  </span>
+                </td>
+                <td class="py-3 px-4">
+                  <div class="flex justify-center">
+                    <button
+                      (click)="verDetallesVenta(venta)"
+                      class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-lg transition-colors duration-200 font-medium flex items-center gap-2"
+                    >
+                      <span>👁️</span>
+                      Ver Detalles
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mensaje cuando no hay ventas -->
+        <div
+          *ngIf="ventasCargadas && ventas.length === 0"
+          class="text-center py-16 text-gray-500"
+        >
+          <div class="text-4xl mb-3">📭</div>
+          <p class="text-xl font-semibold mb-2">No hay ventas registradas</p>
+          <p class="text-lg">
+            Las ventas aparecerán aquí después de finalizarlas
+          </p>
+        </div>
+
+        <!-- Resumen del historial -->
+        <div
+          *ngIf="ventasCargadas && ventas.length > 0"
+          class="bg-gradient-to-r from-blue-100 to-indigo-100 p-6 border-t border-blue-200"
+        >
+          <div
+            class="flex flex-col lg:flex-row justify-between items-center gap-4"
+          >
+            <div class="text-center lg:text-left">
+              <p class="text-lg font-semibold text-gray-800">
+                Total de Ventas:
+                <span class="text-2xl text-blue-600 ml-2">{{
+                  ventas.length
+                }}</span>
+              </p>
+              <p class="text-3xl font-bold text-blue-600">
+                Total General: S/.
+                {{ calcularTotalGeneral() | number : "1.2-2" }}
+              </p>
+            </div>
+            <div class="flex gap-3">
+              <button
+                (click)="cargarVentas()"
+                class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-2"
+              >
+                <span>🔄</span>
+                Actualizar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
