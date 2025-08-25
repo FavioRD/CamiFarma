@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/proveedores/*/detalles").permitAll()
                         .requestMatchers("/api/provemedi/**").permitAll()
+                        .requestMatchers("/api/ventas/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .cors(Customizer.withDefaults());
